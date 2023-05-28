@@ -20,17 +20,20 @@ class ListOfStudentsActivity : AppCompatActivity() {
 
         val bundle = intent.extras
         val name = bundle?.getString("nombre", "")
+        val nameLower=name.toString().lowercase()
+
         val prefs = getSharedPreferences("References", MODE_PRIVATE)
         val namePreference = prefs.getString("name", "default value")
 
-        if (name == namePreference)
+        if (nameLower== namePreference)
         {
             val listOfStudents= getListOfStudents()
             val intent = Intent(this, DetailActivity::class.java)
 
             for (item in listOfStudents)
             {
-                if (item.Name==name){
+                 val baseName=item.Name.lowercase()
+                if (baseName==nameLower){
                     intent.putExtra("name", item.Name)
                     intent.putExtra("age", item.Age.toString())
                     intent.putExtra("url", item.PictureUrl)
